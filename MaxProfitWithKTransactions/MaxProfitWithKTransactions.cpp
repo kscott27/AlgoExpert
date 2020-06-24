@@ -15,7 +15,7 @@ int maxProfitWithKTransactions(vector<int> prices, int k) {
     int maxRollingBal = -prices[0]; // On the first day (day 0), assume the stock was purchased.
     for( size_t day = 1; day < totalDays; day++ ) {
       // Simulate buying the stock by taking profit from from the previous day
-      // and subtracting the price of the stock on the current day.
+      // at the previous transaction threshold and subtracting the price of the stock on the current day.
       int buyScenario = profits[numTransactions - 1][day - 1] - prices[day];
       // Compare the 2 options of either buying the stock today, or holding off and
       // doing nothing, to see which yields a higher rolling balance.
