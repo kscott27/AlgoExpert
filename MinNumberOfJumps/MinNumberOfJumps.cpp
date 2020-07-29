@@ -1,31 +1,24 @@
 #include <vector>
+
 using namespace std;
 
-int minNumberOfJumps(vector<int> array) {
-  vector<int> minJumps(array.size(), 0);
-  for( int i = 0; i < array.size(); i++ ) {
-    int currentRange = array[i];
-    for( int n = 1; n <= currentRange; n++ ) {
-      // Don't index out of the array.
-      if( i + n >= minJumps.size() )
-        break;
 
-      int currentTargetIndex = minJumps[i + n];
-      if( currentTargetIndex < 1 ) {
-        // If the currentTargetIndex is 0, it means it has
-        // not yet been visited by any of the traversals, so
-        // we cannot attempt to just take the min because the min
-        // is 0.
-        minJumps[i + n] = minJumps[i] + 1;
-      }
-      else {
-        // If the current route is the fewest jumps, then update. Otherwise,
-        // stick with a previously determined route that proved to be fewer jumps.
-        minJumps[i + n] = std::min(currentTargetIndex, minJumps[i] + 1);
-      }
+int minNumberOfJumps(vector<int> array) {
+  if( array.size() == 1 )
+    return 0;
+  
+  int steps = array[0];
+  int maxReach = array[0];
+  int jumps = 0;
+  for( int i = 1; i < array.size() - 1; i++ ) {
+    maxReach = std::max(maxReach, array[i] + i);
+    steps--;
+    if( steps == 0 ) {
+      jumps++;
+      steps = maxReach - i;
     }
   }
-  return minJumps.back();
+  return jumps + 1;
 }
 
 
