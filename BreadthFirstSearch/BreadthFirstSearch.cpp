@@ -13,20 +13,21 @@ public:
   Node(string str) { name = str; }
   
   vector<string> breadthFirstSearch(vector<string> *array) {
-    // Start the deque off with the root node.
-    deque<Node*> queue{this};
-    while( !queue.empty() ) {
+    // Start the queue off with the root node.
+    std::queue<Node*> q;
+    q.push(this);
+    while( !q.empty() ) {
       // Push the name of the node on the front of the queue
       // onto the array of names.
-      array->push_back(queue.front()->name);
+      array->push_back(q.front()->name);
       // Iterate through the children of the front node,
       // pushing each onto the queue.
-      for( auto child : queue.front()->children ) {
-        queue.push_back(child);
+      for( auto child : q.front()->children ) {
+        q.push(child);
       }
       // We have handled everything regarding the front node - pop it
       // and move on to the next one.
-      queue.pop_front();
+      q.pop();
     }
     return *array;
   }
